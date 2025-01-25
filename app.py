@@ -1,14 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from deepface import DeepFace
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 
-# Create the upload folder if it doesn't exist
+# Ensure the upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def allowed_file(filename):
@@ -18,32 +17,35 @@ def allowed_file(filename):
 def index():
     return render_template('index.html')
 
+@app.route('/learn-emotions')
+def learn_emotions():
+    return render_template('learn-emotions.html')
+
+@app.route('/practice-emotions')
+def practice_emotions():
+    return render_template('practice-emotions.html')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-        return "No file part", 400
+        return jsonify({'error': 'No file part'}), 400
     file = request.files['file']
     if file.filename == '':
-        return "No selected file", 400
+        return jsonify({'error': 'No selected file'}), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        # Debugging: Print the file path
-        print(f"File saved at: {filepath}")
-
         try:
             # Analyze the image
-            analysis = DeepFace.analyze(img_path=filepath, actions=['emotion'])
-            print(f"DeepFace analysis: {analysis}")  # Debugging
+            analysis = DeepFace.analyze(img_path=filepath, actions=['emotion'], enforce_detection=False)
             dominant_emotion = analysis[0]['dominant_emotion']
-            return f"Dominant Emotion: {dominant_emotion}", 200
+            return jsonify({'dominant_emotion': dominant_emotion}), 200
         except Exception as e:
-            print(f"Error during DeepFace analysis: {e}")  # Log detailed error
-            return f"Error during emotion analysis: {e}", 500
+            return jsonify({'error': str(e)}), 500
     else:
-        return "Invalid file type", 400
+        return jsonify({'error': 'Invalid file type'}), 400
     
 if __name__ == '__main__':
     app.run(debug=True)

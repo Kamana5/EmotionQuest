@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emotion Detector</title>
+  <title>Practice Emotions</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,13 +43,17 @@
       font-size: 18px;
       color: #333;
     }
+
+    .error {
+      color: red;
+    }
   </style>
 </head>
 <body>
   <h1>Upload an Image</h1>
   <div class="upload-container">
     <form id="uploadForm" enctype="multipart/form-data">
-      <input type="file" name="file" accept="image/*" required>
+      <input type="file" name="file" accept=".jpg, .jpeg, .png" required>
       <button type="submit">Analyze Emotion</button>
     </form>
     <div id="result" class="result"></div>
@@ -69,16 +73,18 @@
           body: formData,
         });
 
+        const data = await response.json();
+
         if (response.ok) {
-          const result = await response.text();
-          resultDiv.innerHTML = result;
+          resultDiv.innerHTML = `<strong>Dominant Emotion:</strong> ${data.dominant_emotion}`;
         } else {
-          resultDiv.innerHTML = `Error: ${response.statusText}`;
+          resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
         }
       } catch (error) {
-        resultDiv.innerHTML = `Error: ${error.message}`;
+        resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
       }
     });
   </script>
 </body>
 </html>
+
