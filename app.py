@@ -47,29 +47,44 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Invalid file type'}), 400
-
+    
 @app.route('/live-emotion', methods=['POST'])
 def live_emotion():
     try:
-        data = request.get_json()
-        if not data or 'frame' not in data:
-            return jsonify({'error': 'No frame provided'}), 400
+        # Get the Base64 image data from the request
+        frame_data = request.json.get('frame')
+        if not frame_data:
+            return jsonify({"error": "No frame data provided"}), 400
 
-        # Decode the Base64 image
-        frame_data = data['frame'].split(",")[1]
-        frame_bytes = base64.b64decode(frame_data)
-        frame_path = os.path.join(app.config['UPLOAD_FOLDER'], 'live_frame.jpg')
+        # Decode the Base64 image and save it
+        try:
+            frame_data = frame_data.split(",")[1]  # Remove "data:image/jpeg;base64," prefix
+            frame_bytes = base64.b64decode(frame_data)
+            frame_path = os.path.join(app.config['UPLOAD_FOLDER'], "live_frame.jpg")
+            with open(frame_path, "wb") as f:
+                f.write(frame_bytes)
+        except Exception as e:
+            return jsonify({"error": f"Base64 decoding failed: {str(e)}"}), 400
 
-        # Save the frame
-        with open(frame_path, 'wb') as f:
-            f.write(frame_bytes)
+        # Confirm the file exists and is non-empty
+        if os.path.exists(frame_path):
+            file_size = os.path.getsize(frame_path)
+            if file_size == 0:
+                return jsonify({"error": "Saved image file is empty"}), 500
+            print(f"File saved successfully at {frame_path}, size: {file_size} bytes")
+        else:
+            return jsonify({"error": "File not found after saving"}), 500
 
-        # Analyze the frame
-        analysis = DeepFace.analyze(img_path=frame_path, actions=['emotion'], enforce_detection=False)
-        dominant_emotion = analysis[0]['dominant_emotion']
-        return jsonify({'emotion': dominant_emotion}), 200
+        # Analyze the saved frame with DeepFace
+        try:
+            analysis = DeepFace.analyze(img_path=frame_path, actions=['emotion'], enforce_detection=False)
+            dominant_emotion = analysis[0]['dominant_emotion']
+            return jsonify({"emotion": dominant_emotion}), 200
+        except Exception as e:
+            return jsonify({"error": f"DeepFace failed to process the image: {str(e)}"}), 500
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
