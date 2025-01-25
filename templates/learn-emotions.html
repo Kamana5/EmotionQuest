@@ -1,125 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Learn Emotions</title>
   <style>
-    body, html {
+    body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Bagel Fat One", serif;
+      text-align: center;
       background: url('/static/background.jpg') no-repeat center center fixed;
       background-size: cover;
-      overflow-y: auto; 
+      color: #333;
     }
 
     .logo {
       position: absolute;
       top: 20px;
       left: 20px;
-      width: 200px;
+      width: 120px;
       height: auto;
     }
 
     .content {
-      text-align: center;
-      margin-top: 120px;
+      padding: 20px;
     }
 
     .title {
-      font-size: 48px;
+      font-size: 80px;
       font-weight: bold;
-      color: #333;
+      margin-top: 80px;
       margin-bottom: 40px;
+      color: #555;
+      text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.6);
     }
 
     .emotions-container {
       display: flex;
-      flex-wrap: wrap; 
-      justify-content: center; 
-      gap: 20px; 
-      margin-bottom: 40px; 
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .emotion-card {
-      background-color: #FCD12A; 
-      border-radius: 12px;
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-      padding: 20px;
-      width: 400px; 
-      height: 200px; 
+      background: rgba(255, 255, 255, 0.9);
+      border: 4px dashed #ffcccb; /* Dotted theme */
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .emotion-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .emoji {
-      font-size: 96px; 
-      margin-bottom: 20px; 
+    .emoji img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 20px;
     }
 
     .description {
-      font-size: 24px; 
+      font-size: 28px;
       font-weight: bold;
-      color: #333;
+      color: #555;
     }
 
     .back-button {
-      background-color: #FCD12A; 
-      border: none;
-      border-radius: 12px;
-      padding: 10px 70px;
-      font-size: 18px;
+      background-color: #b3e5fc;
+      border: 4px solid #81d4fa;
+      border-radius: 20px;
+      padding: 15px 40px;
+      font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      margin-top: 20px; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 50px;
     }
 
     .back-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+      transform: scale(1.1);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 50px;
+        margin-top: 40px;
+      }
+
+      .emotion-card {
+        width: 80%;
+        height: auto;
+        padding: 20px;
+      }
+
+      .emoji img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .back-button {
+        font-size: 16px;
+        padding: 12px 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="/static/logo.png" alt="Logo" class="logo">
+  <img src="/static/logo.png" alt="Kids Emotion Logo" class="logo">
   <div class="content">
     <div class="title">Learn Emotions</div>
     <div class="emotions-container">
       <div class="emotion-card">
-        <div class="emoji">😁</div>
+        <div class="emoji">
+          <img src="/static/happyemoji.png" alt="Happy Emoji">
+        </div>
         <div class="description">Happy</div>
       </div>
       <div class="emotion-card">
-        <div class="emoji">😢</div>
+        <div class="emoji">
+          <img src="/static/sademoji.png" alt="Sad Emoji">
+        </div>
         <div class="description">Sad</div>
       </div>
       <div class="emotion-card">
-        <div class="emoji">😠</div>
+        <div class="emoji">
+          <img src="/static/surprised.png" alt="Surprised Emoji">
+        </div>
+        <div class="description">Surprised</div>
+      </div>
+      <div class="emotion-card">
+        <div class="emoji">
+          <img src="/static/angryemoji.png" alt="Angry Emoji">
+        </div>
         <div class="description">Angry</div>
       </div>
-      <div class="emotion-card">
-        <div class="emoji">😮</div>
-        <div class="description">Shocked</div>
-      </div>
-      <div class="emotion-card">
-        <div class="emoji">🙁</div>
-        <div class="description">Confused</div>
-      </div>
     </div>
-    <button class="back-button" onclick="goBack()">Back</button>
-  </div>
 
-  <script>
-    function goBack() {
-      window.history.back();
-    }
-  </script>
-</body>
-</html>
+    <button class="back-button" onclick="goBack()">Back</button>
+  
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+  </html>
+  
