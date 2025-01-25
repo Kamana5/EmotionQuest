@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('/static/background.jpg') no-repeat center center fixed;
+      background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -61,7 +61,8 @@
 </head>
 <body>
   <!-- Logo -->
-  <img src="/static/logo.png" alt="Kids Emotion Logo" class="logo">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Kids Emotion Logo" class="logo">
+
 
 
   <!-- Buttons -->
