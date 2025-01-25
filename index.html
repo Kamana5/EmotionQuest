@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kids Emotion Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 200px;
+      height: auto;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 75px); 
+      gap: 40px;
+    }
+
+    .button {
+      background-color: #FCD12A; 
+      color: black;
+      font-size: 36px;
+      font-weight: bold;
+      padding: 150px 150px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (max-width: 600px) {
+      .button {
+        font-size: 24px;
+        padding: 80px 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <img src="logo.png" alt="Kids Emotion Logo" class="logo">
+
+
+  <!-- Buttons -->
+  <div class="button-container">
+    <a href="learn-emotions.html"><button class="button">LEARN EMOTIONS</button></a>
+    <a href="practice-emotions.html"><button class="button">PRACTICE EMOTIONS</button></a>
+  </div>
+</body>
+</html>
