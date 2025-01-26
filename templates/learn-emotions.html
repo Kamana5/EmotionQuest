@@ -124,39 +124,47 @@
   <div class="content">
     <div class="title">Learn Emotions</div>
     <div class="emotions-container">
-      <div class="emotion-card">
-        <div class="emoji">
-          <img src="/static/happyemoji.png" alt="Happy Emoji">
+      <a href="/happy.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/happyemoji.png" alt="Happy Emoji">
+          </div>
+          <div class="description">Happy</div>
         </div>
-        <div class="description">Happy</div>
-      </div>
-      <div class="emotion-card">
-        <div class="emoji">
-          <img src="/static/sademoji.png" alt="Sad Emoji">
+      </a>
+      <a href="/sad.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/sademoji.png" alt="Sad Emoji">
+          </div>
+          <div class="description">Sad</div>
         </div>
-        <div class="description">Sad</div>
-      </div>
-      <div class="emotion-card">
-        <div class="emoji">
-          <img src="/static/surprised.png" alt="Surprised Emoji">
+      </a>
+      <a href="/surprise.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/surprised.png" alt="Surprised Emoji">
+          </div>
+          <div class="description">Surprised</div>
         </div>
-        <div class="description">Surprised</div>
-      </div>
-      <div class="emotion-card">
-        <div class="emoji">
-          <img src="/static/angryemoji.png" alt="Angry Emoji">
+      </a>
+      <a href="/angry.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/angryemoji.png" alt="Angry Emoji">
+          </div>
+          <div class="description">Angry</div>
         </div>
-        <div class="description">Angry</div>
-      </div>
+      </a>
     </div>
-
+  </div>
     <button class="back-button" onclick="goBack()">Back</button>
   
     <script>
       function goBack() {
-        window.history.back();
+        window.location.href = "{{ url_for('index') }}";
       }
     </script>
-  </body>
-  </html>
-  
+
+</body>
+</html>

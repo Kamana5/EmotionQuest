@@ -84,6 +84,33 @@
       transition: width 0.2s ease-in-out;
     }
 
+    /* Green for correct emotion */
+    #loading-bar.correct {
+      background-color: #4caf50; /* Green for correct */
+    }
+
+    /* Red for incorrect emotion */
+    #loading-bar.incorrect {
+      background-color: #f44336; /* Red for incorrect */
+    }
+    button, select {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: 2px solid #81d4fa;
+      background-color: #b3e5fc;
+      color: black;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover, select:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+
     .result {
       margin-top: 15px;
       font-size: 22px;
@@ -112,6 +139,16 @@
       <div id="loading-bar-container">
         <div id="loading-bar"></div>
       </div>
+      <div class="emotion-selector">
+        <h2>Select an Emotion to Practice</h2>
+        <select id="emotion-select">
+          <option value="happy">Happy</option>
+          <option value="sad">Sad</option>
+          <option value="angry">Angry</option>
+          <option value="surprise">Surprised</option>
+        </select>
+      </div>
+      
       <div id="live-result" class="result"></div>
       <button id="start-webcam">Start Detection</button>
       <button id="stop-webcam" style="display: none;">Stop Detection</button>
@@ -143,14 +180,18 @@
     let webcamStream = null;
     let emotionDetectionInterval = null;
 
+    const emotionSelect = document.getElementById('emotion-select');
+
     startWebcamButton.addEventListener('click', async () => {
+      const targetEmotion = emotionSelect.value; // Get the selected emotion
+      loadingBarContainer.style.display = 'block';
+    
       try {
-        // Start webcam
         webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
         webcam.srcObject = webcamStream;
         startWebcamButton.style.display = 'none';
         stopWebcamButton.style.display = 'inline-block';
-
+    
         emotionDetectionInterval = setInterval(async () => {
           const canvas = document.createElement('canvas');
           canvas.width = webcam.videoWidth;
@@ -159,35 +200,58 @@
           ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
           const frameData = canvas.toDataURL('image/jpeg');
 
+          liveResult.innerHTML = '<span>Detecting...</span>'; // Show detecting message while processing
+    
           try {
-            // Show loading bar
-            loadingBarContainer.style.display = 'block';
-            loadingBar.style.width = '50%';
-
             const response = await fetch('/live-emotion', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ frame: frameData }),
             });
-
+    
             const data = await response.json();
-
             if (response.ok) {
-              loadingBar.style.width = '100%';
-
-              setTimeout(() => {
-                loadingBarContainer.style.display = 'none';
-                loadingBar.style.width = '0%';
-              }, 500);
-
-              liveResult.innerHTML = `<strong>Dominant Emotion:</strong> ${data.emotion}`;
+              const detectedEmotion = data.emotion;
+              if (detectedEmotion.toLowerCase() === targetEmotion.toLowerCase()) {
+                // Match found: Show success and fill the loading bar
+                loadingBar.style.width = '100%'; // Fill the bar completely
+                loadingBar.classList.add('correct'); // Green color
+                loadingBar.classList.remove('incorrect');
+                liveResult.innerHTML = `<strong>Well done! Emotion matched: ${detectedEmotion}</strong>`;
+                clearInterval(emotionDetectionInterval); // Stop detection after success
+              } else {
+                // No match: Reset the loading bar and provide specific feedback
+                loadingBar.style.width = '0%'; // Reset the bar
+                loadingBar.classList.add('incorrect'); // Red color
+                loadingBar.classList.remove('correct');
+            
+                // Provide feedback based on the target emotion
+                switch (targetEmotion.toLowerCase()) {
+                  case 'happy':
+                    liveResult.innerHTML = `<span>Try again, maybe upturn your lips a bit more and smile with your eyes!</span>`;
+                    break;
+                  case 'sad':
+                    liveResult.innerHTML = `<span>Try again, relax your face, and let your mouth and eyebrows droop slightly.</span>`;
+                    break;
+                  case 'angry':
+                    liveResult.innerHTML = `<span>Try again, furrow your brows and tighten your lips to express anger.</span>`;
+                    break;
+                  case 'surprise':
+                    liveResult.innerHTML = `<span>Try again, widen your eyes and raise your eyebrows to show surprise!</span>`;
+                    break;
+                  default:
+                    liveResult.innerHTML = `<span>Emotion not recognized. Try again!</span>`;
+                    break;
+                }
+              }
             } else {
+              // Handle errors from the server
               liveResult.innerHTML = `<span class="error">Error: ${data.error}</span>`;
-              resetLoadingBar();
+              loadingBar.style.width = '0%';
+              loadingBar.classList.remove('correct', 'incorrect');
             }
           } catch (err) {
             liveResult.innerHTML = `<span class="error">Error: ${err.message}</span>`;
-            resetLoadingBar();
           }
         }, 2000);
       } catch (err) {
@@ -195,59 +259,58 @@
       }
     });
 
-
     stopWebcamButton.addEventListener('click', () => {
       if (webcamStream) {
-        const tracks = webcamStream.getTracks();
-        tracks.forEach((track) => track.stop());
-        webcamStream = null;
+        webcamStream.getTracks().forEach(track => track.stop());
+        webcam.srcObject = null;
+        startWebcamButton.style.display = 'inline-block';
+        stopWebcamButton.style.display = 'none';
+        liveResult.innerHTML = '';
+        loadingBar.style.width = '0%';
+        loadingBarContainer.style.display = 'none';
+        clearInterval(emotionDetectionInterval);
       }
-      clearInterval(emotionDetectionInterval);
-      liveResult.innerHTML = '';
-      startWebcamButton.style.display = 'inline-block';
-      stopWebcamButton.style.display = 'none';
-      resetLoadingBar(); // Reset the loading bar when stopping the webcam
     });
 
-    // Upload Emotion Detection
-    const form = document.getElementById('uploadForm');
-    const resultDiv = document.getElementById('result');
-    const loadingBarContainerUpload = document.getElementById('loading-bar-container-upload');
-    const loadingBarUpload = document.getElementById('loading-bar-upload');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      try {
-        // Show upload loading bar
-        loadingBarContainerUpload.style.display = 'block';
-        loadingBarUpload.style.width = '50%';
-
-        const response = await fetch('/upload', {
-          method: 'POST',
-          body: formData,
+        // Upload Emotion Detection
+        const form = document.getElementById('uploadForm');
+        const resultDiv = document.getElementById('result');
+        const loadingBarContainerUpload = document.getElementById('loading-bar-container-upload');
+        const loadingBarUpload = document.getElementById('loading-bar-upload');
+    
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+    
+          try {
+            // Show upload loading bar
+            loadingBarContainerUpload.style.display = 'block';
+            loadingBarUpload.style.width = '50%';
+    
+            const response = await fetch('/upload', {
+              method: 'POST',
+              body: formData,
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+              loadingBarUpload.style.width = '100%';
+    
+              setTimeout(() => {
+                loadingBarContainerUpload.style.display = 'none';
+                loadingBarUpload.style.width = '0%';
+              }, 500);
+    
+              resultDiv.innerHTML = `<strong>Dominant Emotion:</strong> ${data.dominant_emotion}`;
+            } else {
+              resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
+            }
+          } catch (error) {
+            resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+          }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          loadingBarUpload.style.width = '100%';
-
-          setTimeout(() => {
-            loadingBarContainerUpload.style.display = 'none';
-            loadingBarUpload.style.width = '0%';
-          }, 500);
-
-          resultDiv.innerHTML = `<strong>Dominant Emotion:</strong> ${data.dominant_emotion}`;
-        } else {
-          resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
-        }
-      } catch (error) {
-        resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
-      }
-    });
-
+    
     function goBack() {
       window.history.back();
     }

@@ -84,6 +84,23 @@ def live_emotion():
             return jsonify({"error": f"DeepFace failed to process the image: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/happy.html')
+def happy():
+    return render_template('happy.html')
+
+@app.route('/sad.html')
+def sad():
+    return render_template('sad.html')
+
+@app.route('/surprise.html')
+def surprise():
+    return render_template('surprise.html')
+
+@app.route('/angry.html')
+def angry():
+    return render_template('angry.html')
 
 
 if __name__ == '__main__':

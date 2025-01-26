@@ -1,5 +1,7 @@
 from deepface import DeepFace
 
+
+
 try:
     analysis = DeepFace.analyze(
         img_path='uploads/happy.jpg', 

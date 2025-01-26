@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Emotion Page</title>
+  <title>Surprised Emotion Page</title>
   <style>
     /* General Styles */
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom, #d1f0ff, #bdf7cc);
+      font-family: 'Bagel Fat One', serif;
+      background: linear-gradient(to bottom, #ffe4c4, #ffffff); /* Orange gradient */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -20,43 +20,40 @@
     /* Navigation Bar */
     .navigation-bar {
       width: 100%;
-      background-color: #6ABF4B;
+      background-color: #ff9800; /* Bright orange */
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       padding: 10px 20px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .back-button {
-      background-color:rgb(148, 206, 154);
-      color:rgb(255, 255, 255);
+    .nav-button {
+      background-color: #ffa726;
+      color: white;
       font-size: 16px;
       font-weight: bold;
-      border: 2px solid #6ABF4B;
+      border: none;
       border-radius: 20px;
-      padding: 10px 25px;
+      padding: 10px 20px;
       margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
       text-decoration: none;
-      transition: all 0.3s ease-in-out;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .back-button:hover {
-      background-color: #6ABF4B;
-      color: #FFFFFF;
+    .nav-button:hover {
+      background-color: #fb8c00;
       transform: scale(1.1);
-      box-shadow: 0px 8px 15px rgba(106, 191, 75, 0.3);
     }
 
     /* Main Content */
     .emotion-page {
-      width: 100%;
+      width: 90%;
       max-width: 800px;
-      background: white;
+      background: #ffffff;
       margin: 50px auto;
-      padding: 10px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       text-align: center;
@@ -65,13 +62,13 @@
     .emotion-title {
       font-size: 32px;
       font-weight: bold;
-      color: #4CAF50;
+      color: #ff9800;
       margin-bottom: 20px;
     }
 
     .slideshow {
       position: relative;
-      background-color: #F5F5F5;
+      background-color: #ffefd5; /* Light orange background for slideshow */
       border-radius: 10px;
       height: 500px;
       display: flex;
@@ -85,11 +82,11 @@
       max-height: 100%;
       max-width: 100%;
       border-radius: 10px;
-      display: none; 
+      display: none;
     }
 
     .slideshow img.active {
-      display: block; 
+      display: block;
     }
 
     /* Buttons */
@@ -107,9 +104,9 @@
       color: white;
       font-size: 18px;
       border: none;
-      border-radius: 50%; 
-      width: 40px; 
-      height: 40px; 
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -120,58 +117,29 @@
     .control-button:hover {
       background-color: rgba(0, 0, 0, 0.7);
     }
-
-    /* Audio Section */
-    .audio-section {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .audio-title {
-      font-size: 20px;
-      color: #4CAF50;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    audio {
-      width: 100%;
-      max-width: 500px;
-      outline: none;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
   <!-- Navigation Bar -->
   <header class="navigation-bar">
-    <a href="{{ url_for('learn_emotions') }}" class="back-button">Learn Emotions Home</a>
-    <a href="{{ url_for('practice_emotions') }}" class="back-button">Practice Emotions Home</a>
+    <a href="{{ url_for('learn_emotions') }}" class="nav-button">Learn Emotions Home</a>
+    <a href="{{ url_for('practice_emotions') }}" class="nav-button">Practice Emotions</a>
   </header>
 
   <!-- Emotion Display -->
   <main class="emotion-page">
-    <h1 class="emotion-title">Happy</h1>
+    <h1 class="emotion-title">Surprised</h1>
     <div class="slideshow">
       <!-- Slideshow Images -->
-      <img src="/static/happy1.jpg" alt="Happy Image 1" class="active">
-      <img src="/static/happy2.jpg" alt="Happy Image 2">
-      <img src="/static/happy3.jpg" alt="Happy Image 3">
-      
+      <img src="/static/surprised1.jpg" alt="Surprised Image 1" class="active">
+      <img src="/static/surprised2.jpg" alt="Surprised Image 2">
+      <img src="/static/surprised3.jpg" alt="Surprised Image 3">
+
       <!-- Controls -->
       <div class="slideshow-controls">
         <button class="control-button" id="prev-btn">❮</button>
         <button class="control-button" id="next-btn">❯</button>
       </div>
-    </div>
-
-    <!-- Audio Section -->
-    <div class="audio-section">
-      <div class="audio-title">Listen to the Happy Emotion Explanation</div>
-      <audio controls>
-        <source src="/static/happyslide.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
     </div>
   </main>
 
