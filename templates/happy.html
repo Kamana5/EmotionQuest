@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap" rel="stylesheet">  
   <title>Happy Emotion Page</title>
   <style>
     /* General Styles */
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: "Barriecito", serif;
       background: linear-gradient(to bottom, #d1f0ff, #bdf7cc);
       display: flex;
       flex-direction: column;
@@ -47,11 +50,11 @@
 
     /* Main Content */
     .emotion-page {
-      width: 100%;
+      width: 90%;
       max-width: 800px;
       background: white;
       margin: 50px auto;
-      padding: 10px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       text-align: center;
@@ -68,61 +71,63 @@
       position: relative;
       background-color: #F5F5F5;
       border-radius: 10px;
-      height: 500px;
+      height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
       overflow: hidden;
+      margin-bottom: 20px;
     }
 
     .slideshow img {
       max-height: 100%;
       max-width: 100%;
       border-radius: 10px;
-      display: none; 
+      display: none; /* Initially hide all images */
     }
 
     .slideshow img.active {
-      display: block; 
+      display: block; /* Show the active image */
+    }
+
+    /* Caption */
+    .caption {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      margin-top: 10px;
+      padding: 0 20px;
     }
 
     /* Buttons */
     .slideshow-controls {
-      position: absolute;
-      width: 100%;
+      margin-top: 20px;
       display: flex;
       justify-content: space-between;
-      top: 50%;
-      transform: translateY(-50%);
     }
 
     .control-button {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        font-size: 18px;
-        border: none;
-        border-radius: 50%; 
-        width: 40px; 
-        height: 40px; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        }
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-        .control-button:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-        }
-
+    .control-button:hover {
+      background-color: #45A049;
+    }
   </style>
 </head>
 <body>
   <!-- Navigation Bar -->
   <header class="navigation-bar">
-    <a href="learn-emotions.html" class="nav-button">Learn Emotions</a>
-    <a href="practice-emotions.html" class="nav-button">Practice Emotions</a>
+    <a href="learn-emotions" class="nav-button">Learn Emotions</a>
+    <a href="practice-emotions" class="nav-button">Practice Emotions</a>
   </header>
 
   <!-- Emotion Display -->
@@ -130,39 +135,55 @@
     <h1 class="emotion-title">Happy</h1>
     <div class="slideshow">
       <!-- Slideshow Images -->
-      <img src="/static/happy1.jpg" alt="Happy Image 1" class="active">
-      <img src="/static/happy2.jpg" alt="Happy Image 2">
-      <img src="/static/happy3.jpg" alt="Happy Image 3">
-      
-      <!-- Controls -->
-      <div class="slideshow-controls">
-        <button class="control-button" id="prev-btn">❮</button>
-        <button class="control-button" id="next-btn">❯</button>
-      </div>
+      <img src="/static/happy_image.jpg" alt="Happy Image 1" class="active">
+      <img src="/static/happy_image2.jpg" alt="Happy Image 2">
+      <img src="/static/happy_image3.jpg" alt="Happy Image 3">
+      <img src="/static/happy_image4.jpg" alt="Happy Image 4">
+      <img src="/static/happy_image5.png" alt="Happy Image 5">
+      <img src="/static/happy_image6.jpg" alt="Happy Image 6">
+      <img src="/static/happy_image7.jpg" alt="Happy Image 7">
+      <img src="/static/happy_image8.jpg" alt="Happy Image 8">
+    </div>
+    <p class="caption">Happiness is when you feel really good inside, like when you smile or laugh!</p>
+    <div class="slideshow-controls">
+      <button class="control-button" id="prev-btn">Previous</button>
+      <button class="control-button" id="next-btn">Next</button>
     </div>
   </main>
 
   <script>
     // JavaScript for the Slideshow
     const images = document.querySelectorAll('.slideshow img');
+    const captions = [
+      "Happiness is when you feel really good inside, like when you smile or laugh!",
+      "It happens when something fun, nice, or exciting happens to you.",
+      "For example, you might feel happy when you hug someone you love.",
+      "Or when you eat your favourite snack.",
+      "Or play your favourite game.",
+      "You may be able to tell that someone is happy when they have a smile on their face.",
+      "They laugh or giggle.",
+      "They might jump up and down, clap their hands, and do a little dance!"
+    ];
+    const captionElement = document.querySelector('.caption');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     let currentIndex = 0;
 
-    function showImage(index) {
+    function showSlide(index) {
       images.forEach((img, i) => {
         img.classList.toggle('active', i === index);
       });
+      captionElement.textContent = captions[index];
     }
 
     prevBtn.addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
+      showSlide(currentIndex);
     });
 
     nextBtn.addEventListener('click', () => {
       currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
+      showSlide(currentIndex);
     });
   </script>
 </body>
