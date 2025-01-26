@@ -12,7 +12,7 @@
       margin: 0;
       font-family: "Barriecito", serif;
       text-align: center;
-      background: url('/static/background.jpg') no-repeat center center fixed;
+      background: url("{{ url_for('static', filename='background.png') }}") no-repeat center center fixed; 
       background-size: cover;
       color: #333;
     }
