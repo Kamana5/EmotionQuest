@@ -148,44 +148,73 @@
     <p class="caption">Happiness is when you feel really good inside, like when you smile or laugh!</p>
     <div class="slideshow-controls">
       <button class="control-button" id="prev-btn">Previous</button>
+      <button class="control-button" id="replay-btn">Replay</button>
       <button class="control-button" id="next-btn">Next</button>
     </div>
+    <audio id="audio-player" controls style="display: none;"></audio>
   </main>
 
+ 
   <script>
-    // JavaScript for the Slideshow
+    // JavaScript for the Slideshow with Audio
     const images = document.querySelectorAll('.slideshow img');
     const captions = [
-      "Happiness is when you feel really good inside, like when you smile or laugh!",
-      "It happens when something fun, nice, or exciting happens to you.",
-      "For example, you might feel happy when you hug someone you love.",
-      "Or when you eat your favourite snack.",
-      "Or play your favourite game.",
-      "You may be able to tell that someone is happy when they have a smile on their face.",
-      "They laugh or giggle.",
-      "They might jump up and down, clap their hands, and do a little dance!"
+        "Happiness is when you feel really good inside, like when you smile or laugh!",
+        "It happens when something fun, nice, or exciting happens to you.",
+        "For example, you might feel happy when you hug someone you love.",
+        "Or when you eat your favourite snack.",
+        "Or play your favourite game.",
+        "You may be able to tell that someone is happy when they have a smile on their face.",
+        "They laugh or giggle.",
+        "They might jump up and down, clap their hands, and do a little dance!"
+    ];
+    const audioFiles = [
+        "/static/audio1.mp3",
+        "/static/audio2.mp3",
+        "/static/audio3.mp3",
+        "/static/audio4.mp3",
+        "/static/audio5.mp3",
+        "/static/audio6.mp3",
+        "/static/audio7.mp3",
+        "/static/audio8.mp3"
     ];
     const captionElement = document.querySelector('.caption');
+    const audioPlayer = document.getElementById('audio-player');
     const prevBtn = document.getElementById('prev-btn');
+    const replayBtn = document.getElementById('replay-btn');
     const nextBtn = document.getElementById('next-btn');
     let currentIndex = 0;
-
+  
     function showSlide(index) {
-      images.forEach((img, i) => {
-        img.classList.toggle('active', i === index);
-      });
-      captionElement.textContent = captions[index];
+        images.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+        });
+        captionElement.textContent = captions[index];
+        audioPlayer.src = audioFiles[index]; // Update the audio source
+        audioPlayer.play(); // Play the audio for the current slide
     }
-
+  
+    // Play the first audio when the page loads
+    function playFirstAudio() {
+        showSlide(0); // Display the first slide
+    }
+  
     prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showSlide(currentIndex);
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showSlide(currentIndex);
     });
-
+  
+    replayBtn.addEventListener('click', () => {
+        audioPlayer.currentTime = 0; // Restart the audio from the beginning
+        audioPlayer.play(); // Play the audio again
+    });
+  
     nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      showSlide(currentIndex);
+        currentIndex = (currentIndex + 1) % images.length;
+        showSlide(currentIndex);
     });
+  
+    // Call playFirstAudio() on page load
+    window.onload = playFirstAudio;
   </script>
-</body>
-</html>
+  
