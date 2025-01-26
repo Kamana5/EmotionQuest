@@ -3,73 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kids Emotion Website</title>
+  <title>Emotion Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
-      background-size: cover;
+      background: url("{{ url_for('static', filename='background.png') }}") no-repeat center center fixed; 
+      background-size: cover; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
     }
 
+    /* Logo in Top-Left Corner */
     .logo {
       position: absolute;
       top: 10px;
       left: 10px;
-      width: 200px;
+      width: 60px;
       height: auto;
     }
 
-    .button-container {
+    /* Title in Center */
+    .site-title {
+      font-family: "Barriecito", cursive;
+      font-size: 50px;
+      color: #EDB953; /* Title fill color */
+      text-align: center;
+      margin-top: 50px;
+      text-shadow: -2px -2px 0px #674C15, 2px -2px 0px #674C15, -2px 2px 0px #674C15, 2px 2px 0px #674C15; /* Stroke effect */
+    }
+
+    /* Main Container for Buttons */
+    .container {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: calc(100vh - 75px); 
       gap: 40px;
+      padding: 50px 0;
+      margin-top: 50px;
     }
 
+    /* Buttons */
     .button {
-      background-color: #FCD12A; 
-      color: black;
-      font-size: 36px;
+      width: 500px;
+      height: 500px;
+      border-radius: 25px;
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px; /* Increased font size */
       font-weight: bold;
-      padding: 150px 150px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
+      font-family: "Barriecito", cursive;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-align: center;
-    }
-
-    .button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    a {
       text-decoration: none;
-      color: inherit;
     }
 
-    @media (max-width: 600px) {
-      .button {
-        font-size: 24px;
-        padding: 80px 80px;
-      }
+    /* Learn Emotions Button */
+    .learn-emotions {
+      background-color: #F3E1B3; /* Box fill */
+      color: #FFFFFF; /* Text fill */
+      border: 2px solid #EDB953; /* Stroke */
+    }
+
+    /* Practice Emotions Button */
+    .practice-emotions {
+      background-color: #EDB953; /* Box fill */
+      color: #FFFFFF; /* Text fill */
+      border: 2px solid #FFFDFD; /* Stroke */
+    }
+
+    /* Hover Effects */
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
   <!-- Logo -->
-  <img src="{{ url_for('static', filename='logo.png') }}" alt="Kids Emotion Logo" class="logo">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Emotion Quest Logo" class="logo">
 
-
-
+  <!-- Title -->
+  <h1 class="site-title">Emotion Quest</h1>
 
   <!-- Buttons -->
-  <div class="button-container">
-    <a href="/learn-emotions"><button class="button">LEARN EMOTIONS</button></a>
-    <a href="/practice-emotions"><button class="button">PRACTICE EMOTIONS</button></a>
+  <div class="container">
+    <a href="/learn-emotions" class="button learn-emotions">LEARN EMOTIONS</a>
+    <a href="/practice-emotions" class="button practice-emotions">PRACTICE EMOTIONS</a>
   </div>
 </body>
 </html>

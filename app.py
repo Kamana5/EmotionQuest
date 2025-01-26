@@ -26,6 +26,10 @@ def learn_emotions():
 def practice_emotions():
     return render_template('practice-emotions.html')
 
+@app.route('/happy')
+def happy():
+    return render_template('happy.html')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
