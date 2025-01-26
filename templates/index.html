@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Quest</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka One', sans-serif;
+      background: url("{{ url_for('static', filename='background.png') }}") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      animation: fade-in 1s ease-in-out;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 120px;
+      height: auto;
+    }
+
+    .site-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 80px;
+      color: #EDB953;
+      text-align: center;
+      margin-top: 70px;
+      text-shadow: -2px -2px 0px #674C15, 2px -2px 0px #674C15, -2px 2px 0px #674C15, 2px 2px 0px #674C15;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 50px 20px;
+      margin-top: 50px;
+    }
+
+    .button {
+      width: 400px;
+      height: 400px;
+      border-radius: 25px;
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .learn-emotions {
+      background-color: #F3E1B3;
+      color: #674C15;
+      border: 3px solid #EDB953;
+    }
+
+    .practice-emotions {
+      background-color: #EDB953;
+      color: #FFFDFD;
+      border: 3px solid #FFFDFD;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.3);
+      background-color: #e6c283;
+    }
+
+    @media (max-width: 768px) {
+      .button {
+        width: 300px;
+        height: 300px;
+        font-size: 28px;
+      }
+
+      .container {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Emotion Quest Logo" class="logo">
+  <h1 class="site-title">Emotion Quest</h1>
+  <div class="container">
+    <a href="/learn-emotions" class="button learn-emotions">LEARN EMOTIONS</a>
+    <a href="/practice-emotions" class="button practice-emotions">PRACTICE EMOTIONS</a>
+  </div>
+</body>
+</html>

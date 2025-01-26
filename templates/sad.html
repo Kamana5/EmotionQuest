@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <title>Sad Emotion Page</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: "Barriecito", serif;
+      background: linear-gradient(to bottom, rgb(7, 32, 145), #8fa6cf);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 120px;
+      height: auto;
+    }
+
+    /* Navigation Bar */
+    .navigation-bar {
+      width: 100%;
+      background-color: #0f1379;
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-button {
+      background-color: rgb(26, 51, 165);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(26, 52, 165, 0.584);
+    }
+
+    /* Main Content */
+    .emotion-page {
+      width: 90%;
+      max-width: 800px;
+      background: white;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .emotion-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #0f1379;
+      margin-bottom: 20px;
+    }
+
+    .slideshow {
+      position: relative;
+      background-color: #F5F5F5;
+      border-radius: 10px;
+      height: px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .slideshow img {
+      width: 100%; /* Stretch image to fit container width */
+      height: 100%; /* Stretch image to fit container height */
+      object-fit: cover; /* Maintain aspect ratio, fill container, crop excess parts */
+      border-radius: 10px;
+      display: none; /* Initially hide all images */
+    }
+
+    .slideshow img.active {
+      display: block; /* Show the active image */
+    }
+
+    /* Caption */
+    .caption {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      margin-top: 10px;
+      padding: 0 20px;
+    }
+
+    /* Buttons */
+    .slideshow-controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .control-button {
+      background-color: #0f1379;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .control-button:hover {
+      background-color: rgba(26, 52, 165, 0.584);
+    }
+  </style>
+</head>
+<body>
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Emotion Quest Logo" class="logo">
+  <!-- Navigation Bar -->
+  <header class="navigation-bar">
+    <a href="learn-emotions" class="nav-button">Learn Emotions</a>
+    <a href="practice-emotions" class="nav-button">Practice Emotions</a>
+  </header>
+
+  <!-- Emotion Display -->
+  <main class="emotion-page">
+    <h1 class="emotion-title">Sad</h1>
+    <div class="slideshow">
+      <!-- Slideshow Images -->
+      <img src="/static/sad_image.jpg" alt="Sad Image 1" class="active">
+      <img src="/static/sad_image2.jpg" alt="Sad Image 2">
+      <img src="/static/sad_image3.jpg" alt="Sad Image 3">
+      <img src="/static/sad_image4.jpg" alt="Sad Image 4">
+      <img src="/static/sad_image5.png" alt="Sad Image 5">
+      <img src="/static/sad_image6.jpg" alt="Sad Image 6">
+      <img src="/static/sad_image7.jpg" alt="Sad Image 7">
+      <img src="/static/sad_image8.jpg" alt="Sad Image 8">
+    </div>
+    <p class="caption">Happiness is when you feel really good inside, like when you smile or laugh!</p>
+    <div class="slideshow-controls">
+      <button class="control-button" id="prev-btn">Previous</button>
+      <button class="control-button" id="replay-btn">Replay</button>
+      <button class="control-button" id="next-btn">Next</button>
+    </div>
+    <audio id="audio-player" controls style="display: none;"></audio>
+  </main>
+
+ 
+  <script>
+    const images = document.querySelectorAll('.slideshow img');
+    const captions = [
+        "Sadness is when you feel down or not-so-happy.",
+    ];
+
+  
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showSlide(currentIndex);
+    });
+  </script>
+  
