@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Emotions</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Bagel Fat One", serif;
+      text-align: center;
+      background: url("{{ url_for('static', filename='background.png') }}") no-repeat center center fixed; 
+      background-size: cover; 
+      color: #333;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 120px;
+      height: auto;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 80px;
+      font-weight: bold;
+      margin-top: 80px;
+      margin-bottom: 40px;
+      color: #EDB953;
+      text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.6);
+      text-shadow: -2px -2px 0px #674C15, 2px -2px 0px #674C15, -2px 2px 0px #674C15, 2px 2px 0px #674C15; /* Stroke effect */
+    }
+
+    .emotions-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .emotion-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 4px dashed #EDB953; /* Dotted theme */
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+    }
+
+    .emotion-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .emotion-card a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .emoji img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: 28px;
+      font-weight: bold;
+      color: #EDB953;
+    }
+
+    .back-button {
+      background-color: #F3E1B3;
+      border: 4px solid #EDB953;
+      border-radius: 20px;
+      padding: 15px 40px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 50px;
+    }
+
+    .back-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 50px;
+        margin-top: 40px;
+      }
+
+      .emotion-card {
+        width: 80%;
+        height: auto;
+        padding: 20px;
+      }
+
+      .emoji img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .back-button {
+        font-size: 16px;
+        padding: 12px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="/static/logo.png" alt="Kids Emotion Logo" class="logo">
+  <div class="content">
+    <div class="title">Learn Emotions</div>
+    <div class="emotions-container">
+      <a href="/happy.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/happyemoji.png" alt="Happy Emoji">
+          </div>
+          <div class="description">Happy</div>
+        </div>
+      </a>
+      <a href="/sad.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/sademoji.png" alt="Sad Emoji">
+          </div>
+          <div class="description">Sad</div>
+        </div>
+      </a>
+      <a href="/surprise.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/surprised.png" alt="Surprised Emoji">
+          </div>
+          <div class="description">Surprised</div>
+        </div>
+      </a>
+      <a href="/angry.html">
+        <div class="emotion-card">
+          <div class="emoji">
+            <img src="/static/angryemoji.png" alt="Angry Emoji">
+          </div>
+          <div class="description">Angry</div>
+        </div>
+      </a>
+    </div>
+  </div>
+    <button class="back-button" onclick="goBack()">Back</button>
+  
+    <script>
+      function goBack() {
+        window.location.href = "{{ url_for('index') }}";
+      }
+    </script>
+
+</body>
+</html>
